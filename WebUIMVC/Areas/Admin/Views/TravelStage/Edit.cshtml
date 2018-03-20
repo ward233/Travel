@@ -1,0 +1,88 @@
+﻿@model Model.TravelStage
+
+@{
+    ViewBag.Title = "修改行程";
+}
+
+@section head
+{
+    <style>
+        .btn-submit {
+            width: 300px;
+        }
+    </style>
+    <link href="/Content/assets/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+}
+
+<div class="panel panel-headline">
+    <div class="panel-heading">
+        <h3 class="panel-title">更新旅游行程</h3>
+
+    </div>
+    <div class="panel-body">
+
+        @using (Html.BeginForm())
+        {
+            <div class="form-horizontal formWarp">
+
+                <div class="form-group hidden">
+                    @Html.TextBoxFor(vm => vm.Id)
+                </div>
+
+                <div class="form-group">
+
+                    @Html.TextBoxFor(vm => vm.TravelCategory.Title, new { @class = "form-control input-lg", @readonly = true })
+                </div>
+                <div class="form-group">
+
+                    @Html.TextBoxFor(vm => vm.StartDate, new { @class = "form-control input-lg", placeholder = "出发日期" })
+                </div>
+
+
+                <div class="form-group">
+                    <div class="input-group ">
+                        @Html.TextBoxFor(vm => vm.Days, new { @class = "form-control input-lg", placeholder = "天数" })
+                        <span class="input-group-addon">天</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group ">
+                        @Html.TextBoxFor(vm => vm.Count, new { @class = "form-control input-lg", placeholder = "总人数" })
+                        <span class="input-group-addon">人</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        @Html.TextBoxFor(vm => vm.Price, new { @class = "form-control input-lg", placeholder = "价格" })
+                        <span class="input-group-addon">元</span>
+                    </div>
+                </div>
+
+                <div class="form-group text-center">
+                    <button class="btn btn-primary btn-lg" type="submit">提交修改</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section foot
+{
+    <script src="/Content/assets/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="/Content/assets/js/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script>
+
+        $('#StartDate').datetimepicker({
+            language: 'zh-CN',
+            format: 'yyyy-mm-dd',
+            weekStart: 1,
+            todayBtn: 1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 2,
+            minView: 2,
+            forceParse: 0
+        });
+
+    </script>
+}

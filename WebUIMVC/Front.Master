@@ -1,0 +1,203 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Front.master.cs" Inherits="WebUI.Front" %>
+<!doctype html>
+<html lang="zh-cn">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+
+    <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/vendor/linearicons/style.css">
+    <link rel="stylesheet" href="assets/vendor/chartist/css/chartist-custom.css">
+    <link rel="stylesheet" href="assets/vendor/toastr/toastr.min.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+
+    <link rel="stylesheet" href="assets/css/demo.css">
+    <script src="assets/js/jquery-3.2.1.min.js"></script>
+
+    <script src="assets/vendor/toastr/toastr.min.js"></script>
+
+
+    <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
+    
+    <style>
+        .sidebar .nav .nav > li > a.active {
+            border-left-color: #00AAFF !important;
+        }
+        .sidebar .nav .nav > li > a {
+            padding-left: 30px;
+        }
+        .current-choose {
+            margin: 8px;
+            padding-top: 22px;
+            padding-left: 15px;
+        } .current-choose-text {
+              font-size: 14px !important;
+          }
+        .family-name {
+            margin-right: 10px;
+        }
+    </style>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+
+<body>
+<form runat="server">
+    <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+    <!-- WRAPPER -->
+    <div id="wrapper">
+        <!-- NAVBAR -->
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="brand">
+                <a href="#" style="cursor: default;">
+                    <img src="assets/img/logo-dark.png" alt="Klorofil Logo" class="img-responsive logo"></a>
+            </div>
+            <div class="container-fluid">
+                <div class="navbar-btn">
+                    <button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-arrow-left-circle"></i></button>
+                </div>
+                <div class="navbar-left current-choose">
+                    <p>
+                        目前已选择线路:
+                        <span runat="server" class="label label-primary current-choose-text" ID="sp_CurrentChoose"></span>
+                        <asp:Button Text="取消选择" CssClass="btn btn-danger btn-sm" runat="server" ID="btn_CancleChoose" Visible="False" OnClick="btn_CancleChoose_OnClick" OnClientClick="return confirm('确定要取消选择吗?');" />
+                        目前已添加家属:
+                        <asp:Repeater runat="server" ID="RepFamilyInfo" ItemType="Model.FamilyInfo">
+                            <ItemTemplate>
+                                <span class="label label-primary current-choose-text family-name" >
+                                    <%#Item.RealName %>
+                                </span> 
+                            </ItemTemplate>
+                        </asp:Repeater>
+                        <span runat="server" id="sp_NoFamily" class="label label-primary current-choose-text" Visible="False">无 </span>
+                    </p>
+
+                </div>
+
+                <div id="navbar-menu">
+                    <ul class="nav navbar-nav navbar-right">
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+
+                                <span>
+                                    <asp:Label ID="LblRealName" runat="server" Text=""></asp:Label></span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
+                            <ul class="dropdown-menu">
+
+                                <li><a href="Logout.ashx"><i class="lnr lnr-exit"></i><span>登出</span></a></li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- END NAVBAR -->
+        <!-- LEFT SIDEBAR -->
+        <div id="sidebar-nav" class="sidebar">
+            <div class="sidebar-scroll">
+                <nav>
+                    <ul class="nav" id="itemWarp">
+
+
+                        <li>
+                            <a href="#subPages-TravelCategory" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i><span>旅游项目</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="subPages-TravelCategory" class="collapse" style="height: 0px;">
+                                <ul class="nav">
+                                    <asp:Repeater ID="RepCategory" runat="server" ItemType="Model.TravelCategory">
+                                        <ItemTemplate>
+                                            <li><a title="<%#Item.Title %>" href="TravelCategoryShow.aspx?id=<%#Item.Id %>" class=""><%#Item.Title.Length > 13 ? Item.Title.Remove(10) +"..." :Item.Title %></a></li>
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+                                    
+                                    
+
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#subPages-FamilyInfo" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i><span>家属信息</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                            <div id="subPages-FamilyInfo" class="collapse" style="height: 0px;">
+                                <ul class="nav">
+                                    <li><a href="FamilyAdd.aspx" class="">添加家属</a></li>
+                                    <li><a href="FamilyList.aspx" class="">查看家属信息</a></li>
+
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li><a href="CompleteInfo.aspx" class=""><i class="lnr lnr-code"></i><span>完善个人信息</span></a></li>
+
+
+                        <li><a href="ChangePassword.aspx" class=""><i class="lnr lnr-code"></i><span>修改密码</span></a></li>
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <!-- END LEFT SIDEBAR -->
+        <!-- MAIN -->
+        <div class="main">
+            <!-- MAIN CONTENT -->
+            <div class="main-content">
+                <div class="container-fluid">
+              
+                        <asp:ContentPlaceHolder ID="body" runat="server">
+                        </asp:ContentPlaceHolder>
+                </div>
+            </div>
+            <!-- END MAIN CONTENT -->
+        </div>
+        <!-- END MAIN -->
+        <div class="clearfix"></div>
+
+    </div>
+
+    <asp:UpdatePanel ID="UpdatePanel1" runat="server"></asp:UpdatePanel>
+
+    <!-- END WRAPPER -->
+    <!-- Javascript -->
+</form>
+
+    <script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+
+    <script src="assets/scripts/klorofil-common.js"></script>
+
+    <script>
+
+        //因为是模板页，所以左侧a标签中的活动样式需要自己加，下面的代码都是用来给模板页中左侧当前页面的a标签加active样式的
+        
+        var url = window.location.href;
+        var fileName = url.split("/").pop();
+        var paramerFlag = fileName.indexOf("?");
+        //有参数并且不是TravelCategoryShow的 
+        if (paramerFlag !== -1 && fileName.indexOf("TravelCategoryShow") === -1) {
+            fileName = fileName.substr(0, paramerFlag);
+        }
+        //得到当前文件名的那个a标签
+        var tag = $("a[href='" + fileName + "']");
+
+        tag.addClass("active");
+
+        
+        var liItem = $("#itemWarp li").has(tag);
+        if (liItem.has("div").length > 0) {
+            liItem.children("a").trigger("click");
+        }
+
+
+
+
+    </script>
+    <asp:ContentPlaceHolder ID="footer" runat="server">
+    </asp:ContentPlaceHolder>
+</body>
+
+</html>

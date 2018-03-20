@@ -1,0 +1,7 @@
+﻿.field-validation-error {
+    color: red;
+    float: left;
+}
+.form-group {
+    margin-bottom: 21px;
+}

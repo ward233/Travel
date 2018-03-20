@@ -1,0 +1,55 @@
+﻿@model Model.TravelCategory
+
+@{
+    ViewBag.Title = "添加旅游项目";
+}
+
+@section head
+{
+    @Scripts.Render("~/bundles/Ueditor")
+}
+
+
+<div class="panel panel-headline">
+    <div class="panel-heading">
+        <h3 class="panel-title">添加旅游项目</h3>
+        @ViewBag.Result
+    </div>
+    <div class="panel-body">
+
+        @using (Html.BeginForm("Add","TravelCategory",FormMethod.Post,new {@class = "form-horizontal"}))
+        {
+
+            <div class="form-group">
+
+
+                @Html.TextBoxFor(vm => vm.Title, new { @class = "form-control input-lg", placeholder = "项目标题", required = true })
+
+            </div>
+
+            <div class="form-group">
+
+                @Html.TextAreaFor(vm => vm.Content,new {id = "Content"})
+            </div>
+            <div class="form-group text-center">
+                <button class="btn btn-primary btn-lg">提交</button>
+            </div>
+        }
+    </div>
+</div>
+
+@section foot
+{
+    <script>
+        var ue = UE.getEditor("Content");
+        
+        $("form").submit(function () {
+            $("[name='Content']").val(ue.getContent());
+        });
+
+        $("#Content").css({
+            height: "500px",
+            width:"100%"
+        })
+    </script>
+}

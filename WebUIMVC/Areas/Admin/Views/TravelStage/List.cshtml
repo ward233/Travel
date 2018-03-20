@@ -1,0 +1,62 @@
+﻿@model PagedList<Model.TravelStage>
+
+@{
+    ViewBag.Title = "查看旅游行程";
+}
+
+<div class="panel panel-headline">
+    <div class="panel-heading">
+        <h3 class="panel-title">查看旅游行程</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table table-bordered table-striped text-center">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>旅游项目</th>
+                <th>出发时间</th>
+                <th>人数</th>
+                <th>天数</th>
+                <th>价格</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.Id
+                    </td>
+                    <td>
+                        @Html.ActionLink(item.TravelCategory.Title,"Detail","TravelCategory",new {id = item.TravelCategoryId},new {@class = "btn btn-info btn-sm"})
+                    </td>
+                    <td>
+                        @item.StartDate
+                    </td>
+                    <td>
+                        @item.Count
+                    </td>
+                    <td>
+                        @item.Days
+                    </td>
+                    <td>
+                        @item.Price
+                    </td>
+                    <td>
+                        @Html.ActionLink("修改","Edit",new {id = item.Id},new {@class = "btn btn-warning btn-sm"})
+                        @Html.ActionLink("删除","Delete", new {id = item.Id}, new {@class = "btn btn-danger btn-sm"})
+                    </td>
+                </tr>
+            }
+
+            </tbody>
+        </table>
+        <div class="text-center">
+            @Html.Pager(Model, new PagerOptions { PageIndexParameterName = "pageIndex", ContainerTagName = "ul", CssClass = "pagination", CurrentPagerItemTemplate = "<li class=\"active\"><a href=\"#\">{0}</a></li>", DisabledPagerItemTemplate = "<li class=\"disabled\"><a>{0}</a></li>", PagerItemTemplate = "<li>{0}</li>", Id = "bootstrappager" })
+        </div>
+
+
+    </div>
+</div>

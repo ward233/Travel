@@ -1,0 +1,42 @@
+﻿@model Model.FormNotice
+@{
+    ViewBag.Title = "填表须知";
+}
+
+@section head
+{
+    @Scripts.Render("~/bundles/Ueditor")
+}
+
+<div class="panel panel-headline">
+    <div class="panel-heading">
+        <h3 class="panel-title">添加填表须知</h3>
+
+    </div>
+    <div class="panel-body">
+
+        @using (@Html.BeginForm())
+        {
+            <div class="form-group">
+
+
+                @Html.TextAreaFor(notice => notice.Content)
+
+            </div>
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-lg btn-primary"> 提交</button>
+            </div>
+        }
+    </div>
+</div>
+
+@section foot
+{
+    <script>
+        var ue = UE.getEditor('Content');
+
+    </script>
+
+
+}
+

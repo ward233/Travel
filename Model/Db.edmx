@@ -1,0 +1,693 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Db.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AdminInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LoginName" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DepName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EmpInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RealName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="EmpCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Sex" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="IdCard" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="BirthDay" Type="nvarchar" MaxLength="50" />
+          <Property Name="DepartmentId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FamilyInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RealName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Sex" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="IdCard" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="BirthDay" Type="nvarchar" MaxLength="50" />
+          <Property Name="HasBed" Type="bit" Nullable="false" />
+          <Property Name="Height" Type="float" Nullable="false" />
+          <Property Name="EmpInfoId" Type="int" Nullable="false" />
+          <Property Name="IsTeacher" Type="bit" Nullable="false" />
+          <Property Name="LongTellNum" Type="nvarchar" MaxLength="50" />
+          <Property Name="ShortTellNum" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="FormNotice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Content" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TravelCategory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Content" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IsShow" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TravelChoice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
+          <Property Name="TravelCategoryId" Type="int" Nullable="false" />
+          <Property Name="TravelStageId" Type="int" Nullable="false" />
+          <Property Name="EmpInfo_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TravelStage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StartDate" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Count" Type="int" Nullable="false" />
+          <Property Name="Days" Type="int" Nullable="false" />
+          <Property Name="Price" Type="float" Nullable="false" />
+          <Property Name="TravelCategoryId" Type="int" Nullable="false" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“NewTravel.dbo.ViewFinalStatistic”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="ViewFinalStatistic">
+          <Key>
+            <PropertyRef Name="RealName" />
+            <PropertyRef Name="EmpCode" />
+            <PropertyRef Name="Sex" />
+            <PropertyRef Name="IdCard" />
+            <PropertyRef Name="HasBed" />
+            <PropertyRef Name="Height" />
+            <PropertyRef Name="IsTeacher" />
+            <PropertyRef Name="Title" />
+            <PropertyRef Name="StartDate" />
+            <PropertyRef Name="DepName" />
+          </Key>
+          <Property Name="RealName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="EmpCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Sex" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="IdCard" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="BirthDay" Type="nvarchar" MaxLength="50" />
+          <Property Name="HasBed" Type="bit" Nullable="false" />
+          <Property Name="Height" Type="float" Nullable="false" />
+          <Property Name="IsTeacher" Type="bit" Nullable="false" />
+          <Property Name="LongTellNum" Type="nvarchar" MaxLength="50" />
+          <Property Name="ShortTellNum" Type="nvarchar" MaxLength="50" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="StartDate" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DepName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_EmpInfoDepartment">
+          <End Role="Department" Type="Self.Department" Multiplicity="1" />
+          <End Role="EmpInfo" Type="Self.EmpInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmpInfo">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpInfoFamilyInfo">
+          <End Role="EmpInfo" Type="Self.EmpInfo" Multiplicity="1" />
+          <End Role="FamilyInfo" Type="Self.FamilyInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmpInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FamilyInfo">
+              <PropertyRef Name="EmpInfoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpInfoTravelChoice">
+          <End Role="EmpInfo" Type="Self.EmpInfo" Multiplicity="1" />
+          <End Role="TravelChoice" Type="Self.TravelChoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmpInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TravelChoice">
+              <PropertyRef Name="EmpInfo_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TravelCategoryTravelChoice">
+          <End Role="TravelCategory" Type="Self.TravelCategory" Multiplicity="1" />
+          <End Role="TravelChoice" Type="Self.TravelChoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TravelCategory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TravelChoice">
+              <PropertyRef Name="TravelCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TravelCategoryTravelStage">
+          <End Role="TravelCategory" Type="Self.TravelCategory" Multiplicity="1" />
+          <End Role="TravelStage" Type="Self.TravelStage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TravelCategory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TravelStage">
+              <PropertyRef Name="TravelCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TravelStageTravelChoice">
+          <End Role="TravelStage" Type="Self.TravelStage" Multiplicity="1" />
+          <End Role="TravelChoice" Type="Self.TravelChoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TravelStage">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TravelChoice">
+              <PropertyRef Name="TravelStageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DbStoreContainer">
+          <EntitySet Name="AdminInfo" EntityType="Self.AdminInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmpInfo" EntityType="Self.EmpInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FamilyInfo" EntityType="Self.FamilyInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FormNotice" EntityType="Self.FormNotice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TravelCategory" EntityType="Self.TravelCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TravelChoice" EntityType="Self.TravelChoice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TravelStage" EntityType="Self.TravelStage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ViewFinalStatistic" EntityType="Self.ViewFinalStatistic" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ViewFinalStatistic].[RealName] AS [RealName], 
+    [ViewFinalStatistic].[EmpCode] AS [EmpCode], 
+    [ViewFinalStatistic].[Sex] AS [Sex], 
+    [ViewFinalStatistic].[IdCard] AS [IdCard], 
+    [ViewFinalStatistic].[BirthDay] AS [BirthDay], 
+    [ViewFinalStatistic].[HasBed] AS [HasBed], 
+    [ViewFinalStatistic].[Height] AS [Height], 
+    [ViewFinalStatistic].[IsTeacher] AS [IsTeacher], 
+    [ViewFinalStatistic].[LongTellNum] AS [LongTellNum], 
+    [ViewFinalStatistic].[ShortTellNum] AS [ShortTellNum], 
+    [ViewFinalStatistic].[Title] AS [Title], 
+    [ViewFinalStatistic].[StartDate] AS [StartDate], 
+    [ViewFinalStatistic].[DepName] AS [DepName]
+    FROM [dbo].[ViewFinalStatistic] AS [ViewFinalStatistic]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_EmpInfoDepartment" Association="Self.FK_EmpInfoDepartment">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="EmpInfo" EntitySet="EmpInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpInfoFamilyInfo" Association="Self.FK_EmpInfoFamilyInfo">
+            <End Role="EmpInfo" EntitySet="EmpInfo" />
+            <End Role="FamilyInfo" EntitySet="FamilyInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpInfoTravelChoice" Association="Self.FK_EmpInfoTravelChoice">
+            <End Role="EmpInfo" EntitySet="EmpInfo" />
+            <End Role="TravelChoice" EntitySet="TravelChoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TravelCategoryTravelChoice" Association="Self.FK_TravelCategoryTravelChoice">
+            <End Role="TravelCategory" EntitySet="TravelCategory" />
+            <End Role="TravelChoice" EntitySet="TravelChoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TravelCategoryTravelStage" Association="Self.FK_TravelCategoryTravelStage">
+            <End Role="TravelCategory" EntitySet="TravelCategory" />
+            <End Role="TravelStage" EntitySet="TravelStage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TravelStageTravelChoice" Association="Self.FK_TravelStageTravelChoice">
+            <End Role="TravelStage" EntitySet="TravelStage" />
+            <End Role="TravelChoice" EntitySet="TravelChoice" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Db" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="DbContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TravelCategory" EntityType="Db.TravelCategory" />
+          <EntitySet Name="TravelStage" EntityType="Db.TravelStage" />
+          <AssociationSet Name="TravelCategoryTravelStage" Association="Db.TravelCategoryTravelStage">
+            <End Role="TravelCategory" EntitySet="TravelCategory" />
+            <End Role="TravelStage" EntitySet="TravelStage" />
+          </AssociationSet>
+          <EntitySet Name="EmpInfo" EntityType="Db.EmpInfo" />
+          <EntitySet Name="Department" EntityType="Db.Department" />
+          <AssociationSet Name="EmpInfoDepartment" Association="Db.EmpInfoDepartment">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="EmpInfo" EntitySet="EmpInfo" />
+          </AssociationSet>
+          <EntitySet Name="FamilyInfo" EntityType="Db.FamilyInfo" />
+          <AssociationSet Name="EmpInfoFamilyInfo" Association="Db.EmpInfoFamilyInfo">
+            <End Role="EmpInfo" EntitySet="EmpInfo" />
+            <End Role="FamilyInfo" EntitySet="FamilyInfo" />
+          </AssociationSet>
+          <EntitySet Name="TravelChoice" EntityType="Db.TravelChoice" />
+          <AssociationSet Name="TravelCategoryTravelChoice" Association="Db.TravelCategoryTravelChoice">
+            <End Role="TravelCategory" EntitySet="TravelCategory" />
+            <End Role="TravelChoice" EntitySet="TravelChoice" />
+          </AssociationSet>
+          <AssociationSet Name="TravelStageTravelChoice" Association="Db.TravelStageTravelChoice">
+            <End Role="TravelStage" EntitySet="TravelStage" />
+            <End Role="TravelChoice" EntitySet="TravelChoice" />
+          </AssociationSet>
+          <EntitySet Name="AdminInfo" EntityType="Db.AdminInfo" />
+          <AssociationSet Name="EmpInfoTravelChoice" Association="Db.EmpInfoTravelChoice">
+            <End Role="EmpInfo" EntitySet="EmpInfo" />
+            <End Role="TravelChoice" EntitySet="TravelChoice" />
+          </AssociationSet>
+          <EntitySet Name="FormNotice" EntityType="Db.FormNotice" />
+          <EntitySet Name="ViewFinalStatistic" EntityType="Db.ViewFinalStatistic" />
+        </EntityContainer>
+        <EntityType Name="TravelCategory">
+          <Documentation>
+            <Summary>旅游项目表</Summary>
+          </Documentation>
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" >
+            <Documentation>
+              <Summary>文章标题</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="Content" Type="String" Nullable="false" Unicode="true" MaxLength="Max" FixedLength="false" >
+            <Documentation>
+              <Summary>内容</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="IsShow" Type="Boolean" Nullable="false" >
+            <Documentation>
+              <Summary>是否放入回收站</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" >
+            <Documentation>
+              <Summary>创建时间</Summary>
+            </Documentation>
+          </Property>
+          <NavigationProperty Name="TravelStage" Relationship="Db.TravelCategoryTravelStage" FromRole="TravelCategory" ToRole="TravelStage" />
+          <NavigationProperty Name="TravelChoice" Relationship="Db.TravelCategoryTravelChoice" FromRole="TravelCategory" ToRole="TravelChoice" />
+        </EntityType>
+        <EntityType Name="TravelStage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StartDate" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" >
+            <Documentation>
+              <Summary>出发日期</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="Count" Type="Int32" Nullable="false" ConcurrencyMode="Fixed" >
+            <Documentation>
+              <Summary>总计人数</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="Days" Type="Int32" Nullable="false" >
+            <Documentation>
+              <Summary>天数</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="Price" Type="Double" Nullable="false" >
+            <Documentation>
+              <Summary>价格</Summary>
+            </Documentation>
+          </Property>
+          <NavigationProperty Name="TravelCategory" Relationship="Db.TravelCategoryTravelStage" FromRole="TravelStage" ToRole="TravelCategory" />
+          <Property Name="TravelCategoryId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TravelChoice" Relationship="Db.TravelStageTravelChoice" FromRole="TravelStage" ToRole="TravelChoice" />
+        </EntityType>
+        <Association Name="TravelCategoryTravelStage">
+          <End Type="Db.TravelCategory" Role="TravelCategory" Multiplicity="1" />
+          <End Type="Db.TravelStage" Role="TravelStage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TravelCategory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TravelStage">
+              <PropertyRef Name="TravelCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="EmpInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RealName" Type="String" Nullable="false" Unicode="true" MaxLength="50" FixedLength="false" >
+            <Documentation>
+              <Summary>真实姓名</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="EmpCode" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" >
+            <Documentation>
+              <Summary>工号</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="Sex" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" >
+            <Documentation>
+              <Summary>性别</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="IdCard" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" >
+            <Documentation>
+              <Summary>身份证</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" >
+            <Documentation>
+              <Summary>密码</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="BirthDay" Type="String" Nullable="true" MaxLength="50" Unicode="true" FixedLength="false" >
+            <Documentation>
+              <Summary>生日</Summary>
+            </Documentation>
+          </Property>
+          <NavigationProperty Name="Department" Relationship="Db.EmpInfoDepartment" FromRole="EmpInfo" ToRole="Department" />
+          <Property Name="DepartmentId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="FamilyInfo" Relationship="Db.EmpInfoFamilyInfo" FromRole="EmpInfo" ToRole="FamilyInfo" />
+          <NavigationProperty Name="TravelChoice" Relationship="Db.EmpInfoTravelChoice" FromRole="EmpInfo" ToRole="TravelChoice" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="EmpInfo" Relationship="Db.EmpInfoDepartment" FromRole="Department" ToRole="EmpInfo" />
+        </EntityType>
+        <Association Name="EmpInfoDepartment">
+          <End Type="Db.Department" Role="Department" Multiplicity="1" />
+          <End Type="Db.EmpInfo" Role="EmpInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmpInfo">
+              <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="FamilyInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RealName" Type="String" Nullable="false" Unicode="true" MaxLength="50" FixedLength="false" >
+            <Documentation>
+              <Summary>真实姓名</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="Sex" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" >
+            <Documentation>
+              <Summary>性别</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="IdCard" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" >
+            <Documentation>
+              <Summary>身份证</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="BirthDay" Type="String" Nullable="true" MaxLength="50" Unicode="true" FixedLength="false" >
+            <Documentation>
+              <Summary>生日</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="HasBed" Type="Boolean" Nullable="false" >
+            <Documentation>
+              <Summary>是否占床位</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="Height" Type="Double" Nullable="false" >
+            <Documentation>
+              <Summary>身高</Summary>
+            </Documentation>
+          </Property>
+          <NavigationProperty Name="EmpInfo" Relationship="Db.EmpInfoFamilyInfo" FromRole="FamilyInfo" ToRole="EmpInfo" />
+          <Property Name="EmpInfoId" Type="Int32" Nullable="false" />
+          <Property Name="IsTeacher" Type="Boolean" Nullable="false" />
+          <Property Name="LongTellNum" Type="String" Nullable="true" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="ShortTellNum" Type="String" Nullable="true" MaxLength="50" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <Association Name="EmpInfoFamilyInfo">
+          <End Type="Db.EmpInfo" Role="EmpInfo" Multiplicity="1" />
+          <End Type="Db.FamilyInfo" Role="FamilyInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmpInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FamilyInfo">
+              <PropertyRef Name="EmpInfoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TravelChoice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="TravelCategory" Relationship="Db.TravelCategoryTravelChoice" FromRole="TravelChoice" ToRole="TravelCategory" />
+          <Property Name="TravelCategoryId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TravelStage" Relationship="Db.TravelStageTravelChoice" FromRole="TravelChoice" ToRole="TravelStage" />
+          <Property Name="TravelStageId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="EmpInfo" Relationship="Db.EmpInfoTravelChoice" FromRole="TravelChoice" ToRole="EmpInfo" />
+        </EntityType>
+        <Association Name="TravelCategoryTravelChoice">
+          <End Type="Db.TravelCategory" Role="TravelCategory" Multiplicity="1" />
+          <End Type="Db.TravelChoice" Role="TravelChoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TravelCategory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TravelChoice">
+              <PropertyRef Name="TravelCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TravelStageTravelChoice">
+          <End Type="Db.TravelStage" Role="TravelStage" Multiplicity="1" />
+          <End Type="Db.TravelChoice" Role="TravelChoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TravelStage">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TravelChoice">
+              <PropertyRef Name="TravelStageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AdminInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LoginName" Type="String" Nullable="false" Unicode="true" MaxLength="20" FixedLength="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <Association Name="EmpInfoTravelChoice">
+          <End Type="Db.EmpInfo" Role="EmpInfo" Multiplicity="1" />
+          <End Type="Db.TravelChoice" Role="TravelChoice" Multiplicity="0..1" />
+        </Association>
+        <EntityType Name="FormNotice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Content" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="ViewFinalStatistic">
+          <Key>
+            <PropertyRef Name="RealName" />
+            <PropertyRef Name="EmpCode" />
+            <PropertyRef Name="Sex" />
+            <PropertyRef Name="IdCard" />
+            <PropertyRef Name="HasBed" />
+            <PropertyRef Name="Height" />
+            <PropertyRef Name="IsTeacher" />
+            <PropertyRef Name="Title" />
+            <PropertyRef Name="StartDate" />
+            <PropertyRef Name="DepName" />
+          </Key>
+          <Property Name="RealName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EmpCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Sex" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="IdCard" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BirthDay" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="HasBed" Type="Boolean" Nullable="false" />
+          <Property Name="Height" Type="Double" Nullable="false" />
+          <Property Name="IsTeacher" Type="Boolean" Nullable="false" />
+          <Property Name="LongTellNum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ShortTellNum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StartDate" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DepName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DbStoreContainer" CdmEntityContainer="DbContainer">
+    <EntitySetMapping Name="TravelCategory">
+      <EntityTypeMapping TypeName="IsTypeOf(Db.TravelCategory)">
+        <MappingFragment StoreEntitySet="TravelCategory">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="IsShow" ColumnName="IsShow" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TravelStage">
+      <EntityTypeMapping TypeName="IsTypeOf(Db.TravelStage)">
+        <MappingFragment StoreEntitySet="TravelStage">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="Count" ColumnName="Count" />
+          <ScalarProperty Name="Days" ColumnName="Days" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="TravelCategoryId" ColumnName="TravelCategoryId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EmpInfo">
+      <EntityTypeMapping TypeName="IsTypeOf(Db.EmpInfo)">
+        <MappingFragment StoreEntitySet="EmpInfo">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="RealName" ColumnName="RealName" />
+          <ScalarProperty Name="EmpCode" ColumnName="EmpCode" />
+          <ScalarProperty Name="Sex" ColumnName="Sex" />
+          <ScalarProperty Name="IdCard" ColumnName="IdCard" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="BirthDay" ColumnName="BirthDay" />
+          <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Department">
+      <EntityTypeMapping TypeName="IsTypeOf(Db.Department)">
+        <MappingFragment StoreEntitySet="Department">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="DepName" ColumnName="DepName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FamilyInfo">
+      <EntityTypeMapping TypeName="IsTypeOf(Db.FamilyInfo)">
+        <MappingFragment StoreEntitySet="FamilyInfo">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="RealName" ColumnName="RealName" />
+          <ScalarProperty Name="Sex" ColumnName="Sex" />
+          <ScalarProperty Name="IdCard" ColumnName="IdCard" />
+          <ScalarProperty Name="BirthDay" ColumnName="BirthDay" />
+          <ScalarProperty Name="HasBed" ColumnName="HasBed" />
+          <ScalarProperty Name="Height" ColumnName="Height" />
+          <ScalarProperty Name="EmpInfoId" ColumnName="EmpInfoId" />
+          <ScalarProperty Name="IsTeacher" ColumnName="IsTeacher" />
+          <ScalarProperty Name="LongTellNum" ColumnName="LongTellNum" />
+          <ScalarProperty Name="ShortTellNum" ColumnName="ShortTellNum" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TravelChoice">
+      <EntityTypeMapping TypeName="IsTypeOf(Db.TravelChoice)">
+        <MappingFragment StoreEntitySet="TravelChoice">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+          <ScalarProperty Name="TravelCategoryId" ColumnName="TravelCategoryId" />
+          <ScalarProperty Name="TravelStageId" ColumnName="TravelStageId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AdminInfo">
+      <EntityTypeMapping TypeName="IsTypeOf(Db.AdminInfo)">
+        <MappingFragment StoreEntitySet="AdminInfo">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="LoginName" ColumnName="LoginName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FormNotice">
+      <EntityTypeMapping TypeName="IsTypeOf(Db.FormNotice)">
+        <MappingFragment StoreEntitySet="FormNotice">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="EmpInfoTravelChoice" TypeName="Db.EmpInfoTravelChoice" StoreEntitySet="TravelChoice">
+      <EndProperty Name="EmpInfo">
+        <ScalarProperty Name="Id" ColumnName="EmpInfo_Id" />
+      </EndProperty>
+      <EndProperty Name="TravelChoice">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+          <EntitySetMapping Name="ViewFinalStatistic">
+            <EntityTypeMapping TypeName="Db.ViewFinalStatistic">
+              <MappingFragment StoreEntitySet="ViewFinalStatistic">
+                <ScalarProperty Name="DepName" ColumnName="DepName" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ShortTellNum" ColumnName="ShortTellNum" />
+                <ScalarProperty Name="LongTellNum" ColumnName="LongTellNum" />
+                <ScalarProperty Name="IsTeacher" ColumnName="IsTeacher" />
+                <ScalarProperty Name="Height" ColumnName="Height" />
+                <ScalarProperty Name="HasBed" ColumnName="HasBed" />
+                <ScalarProperty Name="BirthDay" ColumnName="BirthDay" />
+                <ScalarProperty Name="IdCard" ColumnName="IdCard" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="EmpCode" ColumnName="EmpCode" />
+                <ScalarProperty Name="RealName" ColumnName="RealName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

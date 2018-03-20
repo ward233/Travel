@@ -1,0 +1,8 @@
+﻿@model PagedList<Model.TravelCategory>
+@{
+    ViewBag.Title = "title";
+}
+
+<h2>title</h2>
+
+@Html.Pager(Model).Options(o => o.SetPageIndexParameterName("pageIndex").SetHorizontalAlign("right").SetPagerItemTemplate("&nbsp;{0}"))
